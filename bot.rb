@@ -18,6 +18,7 @@ $orders = {}
 # Menu class imported from Menu.rb
 Menu.new
 
+
 class API < Sinatra::Base
   # Send response of message to response_url
   def self.send_response(response_url, msg)
@@ -95,7 +96,7 @@ class API < Sinatra::Base
         updated = Bot.acknowledge_action_from_message(
           request_data['original_message'], 
           'order:select_type', 
-          "You chose a #{selected["text"].downcase}"
+          "You chose #{selected["text"].downcase}"
         )
         url = request_data['response_url']
         API.send_response(url, updated)
@@ -176,7 +177,7 @@ class Bot
       actions: [
         {
           name: 'start',
-          text: 'Start a coffee order',
+          text: 'Open an investment account',
           type: 'button',
           value: 'order:start',
          }]}]
@@ -184,7 +185,7 @@ class Bot
       # Send message
       $client.chat_postMessage(
         channel: res.channel.id, 
-        text: 'I am an account opening bot, and I\'m here to help make the process of setting up an investment account as simple as possible.', 
+        text: 'Hi there. I am an account opening bot, and I\'m here to help make the process of setting up an investment account as simple as possible.', 
         attachments: attachments.to_json
       )
     end
@@ -300,14 +301,17 @@ class Bot
         text: "<@#{user_id}> has started a new account application.",
         attachments: [{
             color: '#5A352D',
-            title: 'Account details',
-            text: "#{order_str}",
+          #  title: 'Account details',
+          #  text: "#{order_str}",
             fields: msg_fields
           }]
       }
 
     API.send_response(ENV['SLACK_WEBHOOK_URL'], final_order)
     return "We are starting the process of opening your account ( #{order_str} )!"
+    $orders[user_id] = ""
+    $orders[user].nil = true
+    
   end
 
   # Find attachment with action_callback_id
@@ -327,9 +331,10 @@ class Bot
     if $orders[user].nil?
       self.intro(user)
     else
+
       $client.chat_postMessage(
         channel: msg['channel'], 
-        text: 'Let\'s keep working on the application'
+        text: 'Try to stay focussed! Now...let\'s keep working on the application'
       )
     end
   end
@@ -355,8 +360,9 @@ class Bot
     options_text = order[:options].map { |c, n| "#{n} #{c}" }
 
     if !options_text.empty?
-      summary.concat(" with #{options_text.join(" and ")}")
+    summary.concat(" with #{options_text.join(" and ")}")
     end
-    return summary.downcase
+   return summary.downcase
+   return
   end
 end

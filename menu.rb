@@ -3,23 +3,23 @@ class Menu
     {
       id: 'investment',
       name: 'Investment',
-      options: ['inv_account_type'],
+      options: ['Account Ownership'],
     },
     {
       id: 'SMSF',
       name: 'SMSF',
-      options: ['smsf_trust_type'],
+      options: ['Trust Type'],
     },
     {
       id: 'superannuation',
       name: 'Superannuation',
-      options: ['super_account_type'],
+      options: ['Super Account Type'],
     }
   ]
 
   @@options = [
     {
-      id: 'inv_account_type',
+      id: 'Account Ownership',
       choices: [
         {
           id: 'individual',
@@ -40,21 +40,21 @@ class Menu
       ],
     },
     {
-      id: 'smsf_trust_type',
+      id: 'Trust Type',
       choices: [
         {
-          id: 'individual trust',
-          name: 'Individual Trust',
+          id: 'individual',
+          name: 'Individual',
         },
         {
-          id: 'corporate trust',
-          name: 'Corporate Trust',
+          id: 'corporate',
+          name: 'Corporate',
         },
      
       ],
     },
     {
-      id: 'super_account_type',
+      id: 'Super Account Type',
       choices: [
         {
           id: 'superannuation',
